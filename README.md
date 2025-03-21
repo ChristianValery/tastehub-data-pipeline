@@ -35,10 +35,91 @@ TasteHub Data Pipeline focuses on processing sales data streaming from various p
 
 ## Getting Started
 
-1. Clone the repository: `git clone https://github.com/ChristianValery/tastehub-data-pipeline.git`
-2. Follow installation and setup instructions in the `docs/installation.md` file.
-3. Run the Streamlit app using `streamlit run app.py` to access visualizations and dashboards.
-4. Use the instructions in `docs/deployment.md` for AWS deployment.
+### Prerequisites
+
+- **Docker and Docker Compose:** Ensure these are installed on your machine. [Download here](https://www.docker.com/get-started).
+- **Basic Command-Line Knowledge:** Familiarity with running commands in a terminal.
+
+### Setup Instructions
+
+Follow these steps to set up and run the TasteHub Data Pipeline locally:
+
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/ChristianValery/tastehub-data-pipeline.git
+   cd tastehub-data-pipeline
+   ```
+
+2. **Configure Environment Variables:**
+   - Create a `.env` file in the project root directory.
+   - Add the following content, replacing placeholders with your preferred credentials:
+     ```
+     POSTGRES_USER=youruser
+     POSTGRES_PASSWORD=yourpassword
+     POSTGRES_DB=yourdb
+     PGADMIN_DEFAULT_EMAIL=admin@example.com
+     PGADMIN_DEFAULT_PASSWORD=adminpassword
+     KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+     ```
+
+3. **Build Docker Images:**
+   - Run the following command to build all necessary Docker images:
+     ```bash
+     docker-compose build
+     ```
+
+4. **Run Initialization Tasks:**
+   - **Set Up the Database:**
+     ```bash
+     docker-compose run --rm db_setup
+     ```
+   - **Generate Historical Transactions:**
+     ```bash
+     docker-compose run --rm historical_data
+     ```
+   - *Note:* Ensure these tasks complete successfully before proceeding.
+
+5. **Start Continuous Services:**
+   - Launch all services in the background:
+     ```bash
+     docker-compose up -d
+     ```
+
+6. **Access the Dashboard:**
+   - Open your browser and navigate to `http://localhost:8501` to explore the Streamlit app with interactive visualizations.
+
+7. **Explore the Database with pgAdmin:**
+   - Go to `http://localhost:5050` in your browser.
+   - Log in using the email and password specified in your `.env` file (e.g., `admin@example.com` and `adminpassword`).
+   - Add a new server with these details:
+     - **Host:** `postgres`
+     - **Port:** `5432`
+     - **Username:** `youruser`
+     - **Password:** `yourpassword`
+     - **Database:** `yourdb`
+
+8. **Stopping the Pipeline:**
+   - To stop all services gracefully:
+     ```bash
+     docker-compose down
+     ```
+   - To stop services and remove all data (use with caution):
+     ```bash
+     docker-compose down -v
+     ```
+
+### Notes
+
+- Complete the initialization tasks (step 4) before starting continuous services (step 5) to ensure proper setup.
+- If you encounter issues, view service logs with:
+  ```bash
+  docker-compose logs <service_name>
+  ```
+- For additional setup details, refer to `docs/installation.md`.
+
+## Cloud Deployment
+
+This project supports deployment on AWS for scalability. For instructions, see `docs/deployment.md`.
 
 ## License
 
