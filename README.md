@@ -88,15 +88,26 @@ Follow these steps to set up and run the TasteHub Data Pipeline locally:
 6. **Access the Dashboard:**
    - Open your browser and navigate to `http://localhost:8501` to explore the Streamlit app with interactive visualizations.
 
-7. **Explore the Database with pgAdmin:**
+7. **Setting Up pgAdmin:**
    - Go to `http://localhost:5050` in your browser.
    - Log in using the email and password specified in your `.env` file (e.g., `admin@example.com` and `adminpassword`).
-   - Add a new server with these details:
-     - **Host:** `postgres`
-     - **Port:** `5432`
-     - **Username:** `youruser`
-     - **Password:** `yourpassword`
-     - **Database:** `yourdb`
+   - **Find the Postgres Container IP Address:**
+     - Run the following command to get the IP address of your Postgres container:
+       ```bash
+       docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" tastehub-data-pipeline-postgres-1
+       ```
+     - Note the IP address returned (e.g., `172.18.0.4`).
+   - **Add a New Server in pgAdmin:**
+     - Right-click on "Servers" in the left panel and select "Create" → "Server...".
+     - In the "General" tab, give your server a name (e.g., "TasteHub DB").
+     - In the "Connection" tab, enter:
+       - Host: The IP address you obtained from the previous step
+       - Port: `5432`
+       - Username: The value of POSTGRES_USER from your .env file
+       - Password: The value of POSTGRES_PASSWORD from your .env file
+       - Database: The value of POSTGRES_DB from your .env file (optional)
+     - Click "Save" to connect to your PostgreSQL database.
+   - **Note:** Using the container's IP address directly solves the common issue where pgAdmin cannot resolve the hostname "postgres" within the Docker network.
 
 8. **Stopping the Pipeline:**
    - To stop all services gracefully:
