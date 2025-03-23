@@ -1,0 +1,5 @@
+pyspark
+kafka-python
+sqlalchemy
+psycopg2-binary
+python-dotenv
