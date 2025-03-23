@@ -1,0 +1,7 @@
+kafka-python
+sqlalchemy
+psycopg2-binary
+pandas
+python-dotenv
+fastparquet
+tqdm
