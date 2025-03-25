@@ -126,7 +126,6 @@ Follow these steps to set up and run the TasteHub Data Pipeline locally:
   ```bash
   docker logs <service_name>
   ```
-- For additional setup details, refer to `docs/installation.md`.
 
 ## Cloud Deployment
 
