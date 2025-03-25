@@ -139,7 +139,7 @@ def produce_transactions(
             producer.send(TRANSACTION_TOPIC, value=transaction_dict)
             logging.info("Sent transaction to Kafka: %s", transaction_dict)
 
-        sleep_time = max(1, int(random.expovariate(base_prob)))
+        sleep_time = max(4, int(random.expovariate(base_prob)))
         sleep(sleep_time)
 
 
