@@ -124,7 +124,7 @@ Follow these steps to set up and run the TasteHub Data Pipeline locally:
 - Complete the initialization tasks (step 4) before starting continuous services (step 5) to ensure proper setup.
 - If you encounter issues, view service logs with:
   ```bash
-  docker-compose logs <service_name>
+  docker logs <service_name>
   ```
 - For additional setup details, refer to `docs/installation.md`.
 
