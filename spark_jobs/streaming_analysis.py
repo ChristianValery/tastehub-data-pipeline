@@ -87,6 +87,7 @@ exploded_df = parsed_df.withColumn("item", explode(col("items"))).select(
     col("item.quantity"),
     col("item.amount")
 )
+exploded_df.writeStream.format("console").start()
 
 logger.info("Aggregating sales data")
 
@@ -139,9 +140,10 @@ store_query = store_sales_df.writeStream \
     .start()
 
 console_query = product_sales_df.writeStream \
-    .outputMode("complete") \
+    .outputMode("update") \
     .format("console") \
     .start()
 
 logger.info("Waiting for termination")
 spark.streams.awaitAnyTermination()
+logger.info("Stopping Spark Session")
