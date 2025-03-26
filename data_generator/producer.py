@@ -1,13 +1,9 @@
 """
 This script generates transactions in real-time and sends them to Kafka.
 
-It also inserts historical transactions into the database.
-
 The transactions are generated based on products, stores, and probabilities.
 
 The transactions are sent to the Kafka topic 'transactions_topic'.
-
-The historical transactions are inserted into the 'transactions' and 'items' tables in the database.
 """
 
 
